@@ -1,4 +1,4 @@
-package com.jantiojo.sendmoney.ui.theme
+package com.jantiojo.sendmoney.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
