@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jantiojo.sendmoney.presentation.home.HomeScreen
 import com.jantiojo.sendmoney.presentation.login.LoginScreenRoute
 
 @Composable
@@ -18,7 +19,21 @@ fun AppNavigation(
     ) {
 
         composable<AppRoute.Login> {
-            LoginScreenRoute()
+            LoginScreenRoute(
+                onLoginSuccess = {
+                    navHostController.navigate(AppRoute.Home) {
+                        popUpTo<AppRoute.Login> {
+                            inclusive = true
+                        }
+
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable<AppRoute.Home>{
+            HomeScreen()
         }
     }
 

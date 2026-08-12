@@ -100,6 +100,19 @@ fun LoginScreen(
                 }
             },
         )
+
+        state.errorMessage?.let { errorMessage ->
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
+
+            Text(
+                text = errorMessage,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+
         Spacer(Modifier.height(24.dp))
 
         Button(
@@ -107,7 +120,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp),
-            enabled = !state.isLoading,
+            enabled = state.isLoginEnabled && !state.isLoading,
         ) {
             if (state.isLoading) {
                 CircularProgressIndicator(
