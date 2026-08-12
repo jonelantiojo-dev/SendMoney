@@ -44,6 +44,15 @@ fun AppNavigation(
                 },
                 onViewTransactionsClick = {
                     navHostController.navigate(AppRoute.Transactions)
+                },
+                onLogoutSuccess = {
+                    navHostController.navigate(AppRoute.Login) {
+                        popUpTo(0) {
+                            inclusive = true
+                        }
+
+                        launchSingleTop = true
+                    }
                 }
             )
         }
