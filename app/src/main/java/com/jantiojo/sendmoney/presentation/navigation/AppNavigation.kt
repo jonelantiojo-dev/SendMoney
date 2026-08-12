@@ -7,6 +7,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jantiojo.sendmoney.presentation.home.HomeScreenRoute
 import com.jantiojo.sendmoney.presentation.login.LoginScreenRoute
+import com.jantiojo.sendmoney.presentation.sendmoney.SendMoneyScreen
+import com.jantiojo.sendmoney.presentation.transactions.TransactionUiModel
+import com.jantiojo.sendmoney.presentation.transactions.TransactionsScreen
+import java.math.BigDecimal
 
 @Composable
 fun AppNavigation(
@@ -36,11 +40,37 @@ fun AppNavigation(
         composable<AppRoute.Home> {
             HomeScreenRoute(
                 onSendMoneyClick = {
-
+                    navHostController.navigate(AppRoute.SendMoney)
                 },
                 onViewTransactionsClick = {
-
+                    navHostController.navigate(AppRoute.Transactions)
                 }
+            )
+        }
+
+        composable<AppRoute.SendMoney> {
+            SendMoneyScreen()
+        }
+
+        composable<AppRoute.Transactions> {
+            TransactionsScreen(
+                transactions = listOf(
+                    TransactionUiModel(
+                        id = "1",
+                        amount = BigDecimal("200.00"),
+                        date = "Aug 12, 2026 • 8:15 AM",
+                    ),
+                    TransactionUiModel(
+                        id = "2",
+                        amount = BigDecimal("50.00"),
+                        date = "Aug 11, 2026 • 6:40 PM",
+                    ),
+                    TransactionUiModel(
+                        id = "3",
+                        amount = BigDecimal("125.50"),
+                        date = "Aug 10, 2026 • 2:30 PM",
+                    ),
+                )
             )
         }
     }
