@@ -10,12 +10,13 @@ import com.jantiojo.sendmoney.presentation.login.LoginScreenRoute
 
 @Composable
 fun AppNavigation(
+    isLoggedIn: Boolean,
     navHostController: NavHostController = rememberNavController()
 ) {
 
     NavHost(
         navController = navHostController,
-        startDestination = AppRoute.Login
+        startDestination = if (isLoggedIn) AppRoute.Home else AppRoute.Login
     ) {
 
         composable<AppRoute.Login> {
@@ -32,7 +33,7 @@ fun AppNavigation(
             )
         }
 
-        composable<AppRoute.Home>{
+        composable<AppRoute.Home> {
             HomeScreen()
         }
     }
