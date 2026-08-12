@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,16 +22,21 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jantiojo.sendmoney.presentation.login.LoginScreen
+import com.jantiojo.sendmoney.presentation.ui.theme.SendMoneyTheme
+import java.math.BigDecimal
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    uiState: HomeUiState,
+    onToggleBalanceVisibility: () -> Unit,
+    onSendMoneyClick: () -> Unit,
+    onViewTransactionsClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -42,7 +48,7 @@ fun HomeScreen(
                 },
                 actions = {
                     TextButton(
-                        onClick = { }
+                        onClick = onLogoutClick
                     ) {
                         Text("Logout")
                     }
@@ -74,17 +80,25 @@ fun HomeScreen(
             ) {
 
                 Text(
-                    text = "500.00",
+                    text = if (uiState.isBalanceVisible) {
+                        uiState.formattedBalance
+                    } else {
+                        "******"
+                    },
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                 )
 
                 IconButton(
-                    onClick = {}
+                    onClick = onToggleBalanceVisibility
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Visibility,
+                        imageVector = if (uiState.isBalanceVisible) {
+                            Icons.Default.VisibilityOff
+                        } else {
+                            Icons.Default.Visibility
+                        },
                         contentDescription = null,
                     )
                 }
@@ -95,7 +109,7 @@ fun HomeScreen(
             )
 
             Button(
-                onClick = { },
+                onClick = onSendMoneyClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
@@ -108,7 +122,7 @@ fun HomeScreen(
             )
 
             OutlinedButton(
-                onClick = { },
+                onClick = onViewTransactionsClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
@@ -122,7 +136,16 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
-    MaterialTheme {
-        HomeScreen()
+    SendMoneyTheme {
+        HomeScreen(
+            uiState = HomeUiState(
+                balance = BigDecimal("500.00"),
+                isBalanceVisible = true,
+            ),
+            onToggleBalanceVisibility = {},
+            onSendMoneyClick = {},
+            onViewTransactionsClick = {},
+            onLogoutClick = {},
+        )
     }
 }
