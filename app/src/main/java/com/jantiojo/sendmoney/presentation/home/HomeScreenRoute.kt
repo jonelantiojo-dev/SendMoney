@@ -1,19 +1,24 @@
 package com.jantiojo.sendmoney.presentation.home
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import java.math.BigDecimal
+import androidx.compose.runtime.getValue
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun HomeScreenRoute(modifier: Modifier = Modifier) {
+fun HomeScreenRoute(
+    onSendMoneyClick: () -> Unit,
+    onViewTransactionsClick: () -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
     HomeScreen(
-        uiState = HomeUiState(
-            balance = BigDecimal("500.00"),
-            isBalanceVisible = true,
-        ),
-        onToggleBalanceVisibility = {},
-        onSendMoneyClick = {},
-        onViewTransactionsClick = {},
+        uiState = state,
+        onToggleBalanceVisibility = viewModel::toggleBalanceVisibility,
+        onSendMoneyClick = onSendMoneyClick,
+        onViewTransactionsClick = onViewTransactionsClick,
         onLogoutClick = {},
     )
 }

@@ -34,7 +34,14 @@ fun AppNavigation(
         }
 
         composable<AppRoute.Home> {
-            HomeScreenRoute()
+            HomeScreenRoute(
+                onSendMoneyClick = {
+
+                },
+                onViewTransactionsClick = {
+
+                }
+            )
         }
     }
 
