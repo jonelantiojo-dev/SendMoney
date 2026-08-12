@@ -20,7 +20,7 @@ import java.math.BigDecimal
 
 
 @Composable
-private fun TransactionItem(
+fun TransactionItem(
     transaction: TransactionUiModel,
     modifier: Modifier = Modifier,
 ) {
