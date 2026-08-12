@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jantiojo.sendmoney.presentation.home.HomeScreenRoute
 import com.jantiojo.sendmoney.presentation.login.LoginScreenRoute
-import com.jantiojo.sendmoney.presentation.sendmoney.SendMoneyScreen
+import com.jantiojo.sendmoney.presentation.sendmoney.SendMoneyScreenRoute
 import com.jantiojo.sendmoney.presentation.transactions.TransactionUiModel
 import com.jantiojo.sendmoney.presentation.transactions.TransactionsScreen
 import java.math.BigDecimal
@@ -58,7 +58,7 @@ fun AppNavigation(
         }
 
         composable<AppRoute.SendMoney> {
-            SendMoneyScreen()
+            SendMoneyScreenRoute()
         }
 
         composable<AppRoute.Transactions> {
