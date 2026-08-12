@@ -7,9 +7,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -18,12 +21,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jantiojo.sendmoney.presentation.ui.theme.SendMoneyTheme
 
 @Composable
 fun LoginScreen(
+    state: LoginUiState,
+    onUserNameChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onPasswordVisibilityChanged: () -> Unit,
+    onSignInClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -49,34 +59,42 @@ fun LoginScreen(
         Spacer(Modifier.height(32.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = { },
+            value = state.username,
+            onValueChange = onUserNameChanged,
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text("Username")
             },
             singleLine = true,
-            enabled = true,
+            enabled = !state.isLoading,
         )
 
         Spacer(Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = { },
+            value = state.password,
+            onValueChange = onPasswordChanged,
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text("Password")
             },
             singleLine = true,
-            enabled = true,
-            visualTransformation = VisualTransformation.None,
+            enabled = !state.isLoading,
+            visualTransformation = if (state.isPasswordVisible) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            },
             trailingIcon = {
                 IconButton(
-                    onClick = { }
+                    onClick = onPasswordVisibilityChanged
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Visibility,
+                        imageVector = if (state.isPasswordVisible) {
+                            Icons.Default.VisibilityOff
+                        } else {
+                            Icons.Default.Visibility
+                        },
                         contentDescription = null,
                     )
                 }
@@ -85,13 +103,20 @@ fun LoginScreen(
         Spacer(Modifier.height(24.dp))
 
         Button(
-            onClick = {},
+            onClick = onSignInClicked,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp),
-            enabled = true,
+            enabled = !state.isLoading,
         ) {
-            Text("Sign In")
+            if (state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(20.dp),
+                    strokeWidth = 2.dp,
+                )
+            } else {
+                Text("Sign In")
+            }
         }
     }
 }
@@ -99,5 +124,17 @@ fun LoginScreen(
 @Preview(showBackground = true)
 @Composable
 private fun LoginScreenPreview() {
-    LoginScreen()
+    SendMoneyTheme {
+        LoginScreen(
+            state = LoginUiState(
+                username = "jonel",
+                password = "123456",
+                isPasswordVisible = true
+            ),
+            onUserNameChanged = {},
+            onPasswordChanged = {},
+            onPasswordVisibilityChanged = {},
+            onSignInClicked = {}
+        )
+    }
 }

@@ -1,12 +1,11 @@
 package com.jantiojo.sendmoney.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jantiojo.sendmoney.presentation.login.LoginScreen
+import com.jantiojo.sendmoney.presentation.login.LoginScreenRoute
 
 @Composable
 fun AppNavigation(
@@ -19,7 +18,7 @@ fun AppNavigation(
     ) {
 
         composable<AppRoute.Login> {
-            LoginScreen()
+            LoginScreenRoute()
         }
     }
 
