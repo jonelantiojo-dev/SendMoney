@@ -6,6 +6,8 @@ import java.math.BigDecimal
 interface WalletRepository {
     val balance: Flow<BigDecimal>
 
+    suspend fun getBalance(): BigDecimal
+
     suspend fun updateBalance(
         newBalance: BigDecimal
     )

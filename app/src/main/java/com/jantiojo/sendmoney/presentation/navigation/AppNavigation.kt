@@ -58,7 +58,11 @@ fun AppNavigation(
         }
 
         composable<AppRoute.SendMoney> {
-            SendMoneyScreenRoute()
+            SendMoneyScreenRoute(
+                onBackClick = {
+                    navHostController.popBackStack()
+                }
+            )
         }
 
         composable<AppRoute.Transactions> {

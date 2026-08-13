@@ -33,6 +33,10 @@ import java.math.BigDecimal
 @Composable
 fun SendMoneyScreen(
     uiState: SendMoneyUiState,
+    onAmountChanged: (String) -> Unit,
+    onSubmitClick: () -> Unit,
+    onDismissResult: () -> Unit,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -44,7 +48,7 @@ fun SendMoneyScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { }
+                        onClick = onBackClick
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
@@ -85,7 +89,7 @@ fun SendMoneyScreen(
 
             OutlinedTextField(
                 value = uiState.amount,
-                onValueChange = { },
+                onValueChange = onAmountChanged,
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text("Amount")
@@ -105,7 +109,7 @@ fun SendMoneyScreen(
             )
 
             Button(
-                onClick = { },
+                onClick = onSubmitClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
@@ -118,11 +122,11 @@ fun SendMoneyScreen(
 
     uiState.result?.let { result ->
         ModalBottomSheet(
-            onDismissRequest = {  }
+            onDismissRequest = onDismissResult
         ) {
             SendMoneyResultContent(
                 result = result,
-                onDoneClick = {  }
+                onDoneClick = onDismissResult
             )
         }
     }
@@ -242,7 +246,11 @@ private fun SendMoneyScreenPreview() {
         SendMoneyScreen(
             uiState = SendMoneyUiState(
                 amount = "100"
-            )
+            ),
+            onAmountChanged = {},
+            onSubmitClick = {},
+            onDismissResult = {},
+            onBackClick = {}
         )
     }
 }

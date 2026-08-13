@@ -1,8 +1,10 @@
 package com.jantiojo.sendmoney.di
 
 import com.jantiojo.sendmoney.data.repository.SessionRepositoryImpl
+import com.jantiojo.sendmoney.data.repository.TransactionRepositoryImpl
 import com.jantiojo.sendmoney.data.repository.WalletRepositoryImpl
 import com.jantiojo.sendmoney.domain.repository.SessionRepository
+import com.jantiojo.sendmoney.domain.repository.TransactionRepository
 import com.jantiojo.sendmoney.domain.repository.WalletRepository
 import dagger.Binds
 import dagger.Module
@@ -25,4 +27,11 @@ abstract class RepositoryModule {
     abstract fun bindWalletRepository(
         implementation: WalletRepositoryImpl
     ): WalletRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindTransactionRepository(
+        implementation: TransactionRepositoryImpl
+    ): TransactionRepository
+
 }

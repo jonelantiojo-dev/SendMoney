@@ -14,6 +14,10 @@ class WalletRepositoryImpl @Inject constructor() : WalletRepository {
     override val balance: Flow<BigDecimal>
         get() = _balance
 
+    override suspend fun getBalance(): BigDecimal {
+        return _balance.value
+    }
+
     override suspend fun updateBalance(newBalance: BigDecimal) {
         _balance.value = newBalance
     }
