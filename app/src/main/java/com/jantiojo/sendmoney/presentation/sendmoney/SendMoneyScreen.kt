@@ -33,6 +33,7 @@ fun SendMoneyScreen(
     onSubmitClick: () -> Unit,
     onDismissResult: () -> Unit,
     onBackClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -40,7 +41,8 @@ fun SendMoneyScreen(
         topBar = {
             AppTopBar(
                 title = "Send Money",
-                onBackClick = onBackClick
+                onBackClick = onBackClick,
+                onLogoutClick = onLogoutClick
             )
         }
     ) { innerPadding ->
@@ -234,7 +236,8 @@ private fun SendMoneyScreenPreview() {
             onAmountChanged = {},
             onSubmitClick = {},
             onDismissResult = {},
-            onBackClick = {}
+            onBackClick = {},
+            onLogoutClick = {}
         )
     }
 }

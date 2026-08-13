@@ -44,13 +44,7 @@ fun AppNavigation(
                     navHostController.navigate(AppRoute.Transactions)
                 },
                 onLogoutSuccess = {
-                    navHostController.navigate(AppRoute.Login) {
-                        popUpTo(0) {
-                            inclusive = true
-                        }
-
-                        launchSingleTop = true
-                    }
+                    navHostController.navigateToLoginScreen()
                 }
             )
         }
@@ -59,6 +53,9 @@ fun AppNavigation(
             SendMoneyScreenRoute(
                 onBackClick = {
                     navHostController.popBackStack()
+                },
+                onLogoutSuccess = {
+                    navHostController.navigateToLoginScreen()
                 }
             )
         }
@@ -67,9 +64,22 @@ fun AppNavigation(
             TransactionsScreenRoute(
                 onBackClick = {
                     navHostController.popBackStack()
+                },
+                onLogoutSuccess = {
+                    navHostController.navigateToLoginScreen()
                 }
             )
         }
     }
 
+}
+
+private fun NavHostController.navigateToLoginScreen() {
+    navigate(AppRoute.Login) {
+        popUpTo(0) {
+            inclusive = true
+        }
+
+        launchSingleTop = true
+    }
 }

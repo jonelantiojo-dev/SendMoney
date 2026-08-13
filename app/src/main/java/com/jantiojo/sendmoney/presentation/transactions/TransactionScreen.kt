@@ -27,6 +27,7 @@ import java.math.BigDecimal
 fun TransactionsScreen(
     uiState: TransactionsUiState,
     onBackClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -34,7 +35,8 @@ fun TransactionsScreen(
         topBar = {
             AppTopBar(
                 title = "Transactions",
-                onBackClick = onBackClick
+                onBackClick = onBackClick,
+                onLogoutClick = onLogoutClick
             )
         }
     ) { innerPadding ->
@@ -137,7 +139,8 @@ private fun TransactionsScreenPreview() {
                     )
                 )
             ),
-            onBackClick = {}
+            onBackClick = {},
+            onLogoutClick = {}
         )
     }
 }

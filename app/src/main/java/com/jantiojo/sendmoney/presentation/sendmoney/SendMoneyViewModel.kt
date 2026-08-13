@@ -3,10 +3,13 @@ package com.jantiojo.sendmoney.presentation.sendmoney
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jantiojo.sendmoney.domain.usecase.GetWalletBalanceUseCase
+import com.jantiojo.sendmoney.domain.usecase.LogoutUseCase
 import com.jantiojo.sendmoney.domain.usecase.SendMoneyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SendMoneyViewModel @Inject constructor(
     private val sendMoneyUseCase: SendMoneyUseCase,
+    private val logoutUseCase: LogoutUseCase,
     getWalletBalanceUseCase: GetWalletBalanceUseCase,
 ) : ViewModel() {
 
@@ -21,6 +25,10 @@ class SendMoneyViewModel @Inject constructor(
         MutableStateFlow(SendMoneyUiState())
 
     val uiState = _uiState.asStateFlow()
+
+    private val _effect = Channel<SendMoneyEffect>()
+
+    val effect = _effect.receiveAsFlow()
 
     init {
         viewModelScope.launch {
@@ -88,6 +96,15 @@ class SendMoneyViewModel @Inject constructor(
     fun dismissResult() {
         _uiState.update {
             it.copy(result = null)
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            logoutUseCase()
+            _effect.send(
+                SendMoneyEffect.NavigateToLogin
+            )
         }
     }
 }
