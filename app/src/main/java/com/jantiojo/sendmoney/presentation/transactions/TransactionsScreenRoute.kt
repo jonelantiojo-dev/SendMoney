@@ -1,32 +1,20 @@
 package com.jantiojo.sendmoney.presentation.transactions
 
 import androidx.compose.runtime.Composable
-import java.math.BigDecimal
+import androidx.compose.runtime.getValue
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun TransactionsScreenRoute(
     onBackClick: () -> Unit,
+    viewModel: TransactionsViewModel = hiltViewModel()
 ) {
+
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
     TransactionsScreen(
-        uiState = TransactionsUiState(
-            transactions = listOf(
-                TransactionUiModel(
-                    id = "1",
-                    amount = BigDecimal("200.00"),
-                    date = "Aug 12, 2026 • 8:15 AM",
-                ),
-                TransactionUiModel(
-                    id = "2",
-                    amount = BigDecimal("50.00"),
-                    date = "Aug 11, 2026 • 6:40 PM",
-                ),
-                TransactionUiModel(
-                    id = "3",
-                    amount = BigDecimal("125.50"),
-                    date = "Aug 10, 2026 • 2:30 PM",
-                )
-            )
-        ),
+        uiState = state,
         onBackClick = onBackClick
     )
 }
